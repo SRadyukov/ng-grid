@@ -2,7 +2,7 @@
 * ng-grid JavaScript Library
 * Authors: https://github.com/angular-ui/ng-grid/blob/master/README.md 
 * License: MIT (http://www.opensource.org/licenses/mit-license.php)
-* Compiled At: 01/27/2014 16:18
+* Compiled At: 01/30/2014 18:37
 ***********************************************/
 (function(window, $) {
 'use strict';
@@ -748,21 +748,21 @@ var ngColumn = function (config, $scope, grid, domUtilityService, $templateCache
         self.editableCellTemplate = colDef.editableCellTemplate || $templateCache.get('editableCellTemplate.html');
     }
     if (colDef.cellTemplate && !TEMPLATE_REGEXP.test(colDef.cellTemplate)) {
-        self.cellTemplate = $.ajax({
+        self.cellTemplate = $templateCache.get(colDef.cellTemplate) || $.ajax({
             type: "GET",
             url: colDef.cellTemplate,
             async: false
         }).responseText;
     }
     if (self.enableCellEdit && colDef.editableCellTemplate && !TEMPLATE_REGEXP.test(colDef.editableCellTemplate)) {
-        self.editableCellTemplate = $.ajax({
+        self.editableCellTemplate = $templateCache.get(colDef.editableCellTemplate) || $.ajax({
             type: "GET",
             url: colDef.editableCellTemplate,
             async: false
         }).responseText;
     }
     if (colDef.headerCellTemplate && !TEMPLATE_REGEXP.test(colDef.headerCellTemplate)) {
-        self.headerCellTemplate = $.ajax({
+        self.headerCellTemplate = $templateCache.get(colDef.headerCellTemplate) || $.ajax({
             type: "GET",
             url: colDef.headerCellTemplate,
             async: false
@@ -3513,10 +3513,9 @@ window.ngGrid.i18n['zh-tw'] = {
     ngPagerLastTitle: '最後頁'
 };
 
-angular.module('ngGrid').run(['$templateCache', function($templateCache) {
-  'use strict';
+angular.module("ngGrid").run(["$templateCache", function($templateCache) {
 
-  $templateCache.put('src/templates/aggregateTemplate.html',
+  $templateCache.put("aggregateTemplate.html",
     "<div ng-click=\"row.toggleExpand()\" ng-style=\"rowStyle(row)\" class=\"ngAggregate\">\r" +
     "\n" +
     "    <span class=\"ngAggregateText\">{{row.label CUSTOM_FILTERS}} ({{row.totalChildren()}} {{AggItemsLabel}})</span>\r" +
@@ -3527,8 +3526,7 @@ angular.module('ngGrid').run(['$templateCache', function($templateCache) {
     "\n"
   );
 
-
-  $templateCache.put('src/templates/cellEditTemplate.html',
+  $templateCache.put("cellEditTemplate.html",
     "<div ng-cell-has-focus ng-dblclick=\"editCell()\">\r" +
     "\n" +
     "\t<div ng-edit-cell-if=\"!(isFocused && CELL_EDITABLE_CONDITION)\">\t\r" +
@@ -3546,28 +3544,23 @@ angular.module('ngGrid').run(['$templateCache', function($templateCache) {
     "</div>"
   );
 
-
-  $templateCache.put('src/templates/cellTemplate.html',
+  $templateCache.put("cellTemplate.html",
     "<div class=\"ngCellText\" ng-class=\"col.colIndex()\"><span ng-cell-text>{{COL_FIELD CUSTOM_FILTERS}}</span></div>"
   );
 
-
-  $templateCache.put('src/templates/checkboxCellTemplate.html',
+  $templateCache.put("checkboxCellTemplate.html",
     "<div class=\"ngSelectionCell\"><input tabindex=\"-1\" class=\"ngSelectionCheckbox\" type=\"checkbox\" ng-checked=\"row.selected\" /></div>"
   );
 
-
-  $templateCache.put('src/templates/checkboxHeaderTemplate.html',
+  $templateCache.put("checkboxHeaderTemplate.html",
     "<input class=\"ngSelectionHeader\" type=\"checkbox\" ng-show=\"multiSelect\" ng-model=\"allSelected\" ng-change=\"toggleSelectAll(allSelected, true)\"/>"
   );
 
-
-  $templateCache.put('src/templates/editableCellTemplate.html',
+  $templateCache.put("editableCellTemplate.html",
     "<input ng-class=\"'colt' + col.index\" ng-input=\"COL_FIELD\" ng-model=\"COL_FIELD\" />"
   );
 
-
-  $templateCache.put('src/templates/footerTemplate.html',
+  $templateCache.put("footerTemplate.html",
     "<div ng-show=\"showFooter\" class=\"ngFooterPanel\" ng-class=\"{'ui-widget-content': jqueryUITheme, 'ui-corner-bottom': jqueryUITheme}\" ng-style=\"footerStyle()\">\r" +
     "\n" +
     "    <div class=\"ngTotalSelectContainer\" >\r" +
@@ -3620,8 +3613,7 @@ angular.module('ngGrid').run(['$templateCache', function($templateCache) {
     "\n"
   );
 
-
-  $templateCache.put('src/templates/gridTemplate.html',
+  $templateCache.put("gridTemplate.html",
     "<div class=\"ngTopPanel\" ng-class=\"{'ui-widget-header':jqueryUITheme, 'ui-corner-top': jqueryUITheme}\" ng-style=\"topPanelStyle()\">\r" +
     "\n" +
     "    <div class=\"ngGroupPanel\" ng-show=\"showGroupPanel()\" ng-style=\"groupPanelStyle()\">\r" +
@@ -3674,8 +3666,7 @@ angular.module('ngGrid').run(['$templateCache', function($templateCache) {
     "\n"
   );
 
-
-  $templateCache.put('src/templates/headerCellTemplate.html',
+  $templateCache.put("headerCellTemplate.html",
     "<div class=\"ngHeaderSortColumn {{col.headerClass}}\" ng-style=\"{'cursor': col.cursor}\" ng-class=\"{ 'ngSorted': !noSortVisible }\">\r" +
     "\n" +
     "    <div ng-click=\"col.sort($event)\" ng-class=\"'colt' + col.index\" class=\"ngHeaderText\">{{col.displayName}}</div>\r" +
@@ -3693,8 +3684,7 @@ angular.module('ngGrid').run(['$templateCache', function($templateCache) {
     "<div ng-show=\"col.resizable\" class=\"ngHeaderGrip\" ng-click=\"col.gripClick($event)\" ng-mousedown=\"col.gripOnMouseDown($event)\"></div>"
   );
 
-
-  $templateCache.put('src/templates/headerRowTemplate.html',
+  $templateCache.put("headerRowTemplate.html",
     "<div ng-style=\"{ height: col.headerRowHeight }\" ng-repeat=\"col in renderedColumns\" ng-class=\"col.colIndex()\" class=\"ngHeaderCell\">\r" +
     "\n" +
     "\t<div class=\"ngVerticalBar\" ng-style=\"{height: col.headerRowHeight}\" ng-class=\"{ ngVerticalBarVisible: !$last }\">&nbsp;</div>\r" +
@@ -3704,8 +3694,7 @@ angular.module('ngGrid').run(['$templateCache', function($templateCache) {
     "</div>"
   );
 
-
-  $templateCache.put('src/templates/menuTemplate.html',
+  $templateCache.put("menuTemplate.html",
     "<div ng-show=\"showColumnMenu || showFilter\"  class=\"ngHeaderButton\" ng-click=\"toggleShowMenu()\">\r" +
     "\n" +
     "    <div class=\"ngHeaderButtonArrow\"></div>\r" +
@@ -3743,8 +3732,7 @@ angular.module('ngGrid').run(['$templateCache', function($templateCache) {
     "</div>"
   );
 
-
-  $templateCache.put('src/templates/rowTemplate.html',
+  $templateCache.put("rowTemplate.html",
     "<div ng-style=\"{ 'cursor': row.cursor }\" ng-repeat=\"col in renderedColumns\" ng-class=\"col.colIndex()\" class=\"ngCell {{col.cellClass}}\">\r" +
     "\n" +
     "\t<div class=\"ngVerticalBar\" ng-style=\"{height: rowHeight}\" ng-class=\"{ ngVerticalBarVisible: !$last }\">&nbsp;</div>\r" +
