@@ -1,5 +1,7 @@
 # ng-grid : An Angular DataGrid
 
+Some fixes to 2.0.7 
+
 [![Build Status](https://travis-ci.org/angular-ui/ng-grid.png)](https://travis-ci.org/angular-ui/ng-grid)
 
 __Contributors:__
@@ -8,6 +10,8 @@ ng-grid Team:
 * [Tim Sweet](http://ornerydevelopment.blogspot.com/)
 * [Jonathon Ricaurte](https://github.com/jonricaurte)
 * [Brian Hann](https://github.com/c0bra)
+
+
 
 License: [MIT](http://www.opensource.org/licenses/mit-license.php)
 
